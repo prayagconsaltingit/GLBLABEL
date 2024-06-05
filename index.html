@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Styling</title>
+
+
+
+    <style>
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 30px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            margin-top: 20px;
+        }
+
+        select,
+        input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"],.btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            display: block;
+            width: auto;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        a.btn {
+            display: inline-block;
+            margin-bottom: 8px;
+            text-decoration: blink;
+        }
+        @media print {
+            td {
+
+                white-space: normal !important;
+ 
+                page-break-inside: avoid;
+            }
+
+            tr {
+               
+                page-break-inside: avoid;
+            }
+
+            @page {
+                margin: 0.6cm 0.3cm !important;
+            }
+        }
+    </style>
+
+
+<body style="margin: 60px;">
+    <div class="" style="text-align: end;">
+        <a href="/demo/EX_SINGLE.xlsx" class="btn" target="_blank" rel="noopener noreferrer">Download Demo Single File</a>
+        <a href="/demo/EX_JODI.xlsx" class="btn" target="_blank" rel="noopener noreferrer">Download Demo Jodi File</a>
+    </div>
+    <div class="container" >
+        <img style="display: block;margin: 0 auto;" id="logoimg" src="" alt="" srcset="">
+        <form id="typeForm" onsubmit="(e)=>submitForm(e)">
+        <div class="row">
+                <label style="margin-top: 40px;">Select Type:</label>
+                <select id="typeSelect" onchange="handleTypeChange()">
+                    <option >Single</option>
+                    <option >Jodi</option>
+                </select>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                    <label>Excel upload</label>
+                    <input type="file" id="myFile" name="filename" required>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <label>Select Size:</label>
+                <select id="sizeSelect" required>
+                    <option value="1.5cm*4.1cm">1.5cm * 4.1cm</option>
+                    <option value="1.4cm*7.0cm">1.4cm * 7.0cm</option>
+                    <option value="1.6cm*5.5cm">1.6cm * 5.5cm</option>
+                </select>
+                <input type="submit" value="Submit" onclick="(e)=>submitForm(e)" style="margin-top: 20px;">           
+            </form>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.4/jspdf.plugin.autotable.min.js"></script>
+
+    <script>
+   
+
+        function handleTypeChange() {
+            var typeSelect = document.getElementById("typeSelect");
+            var sizeSelect = document.getElementById("sizeSelect");
+        }
+
+
+        document.getElementById("typeSelect").addEventListener("change", handleTypeChange);
+
+        let PDFHT = ''
+        var mytable = document.getElementById('mytable');
+        let imgLogo = 'data:image/png;base64,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'
+        $('#logoimg').attr('src',imgLogo)
+        var type = document.getElementById('typeSelect').value;
+        var size = document.getElementById('sizeSelect').value.split('*');
+
+        function createTableFromArrayJodi(dja) {
+            let tmpobj ={}
+            dja.forEach(element => {
+                let tobj = tmpobj[element['JODI']] ||[]
+                tmpobj[element['JODI']] = [...tobj,element]
+            });
+        
+            // console.log('tmpobj', tmpobj)
+            // return
+            let dataArray =Object.keys(tmpobj)
+            var table = document.createElement("table");
+            table.setAttribute("cellspacing", "0");
+            table.setAttribute("cellpadding", "0");
+            table.style.border = "0.75pt solid #000000";
+            table.style.borderCollapse = "collapse";
+            table.style.margin= 'auto';
+            let sz =$('#sizeSelect').val().split('*')
+            var result = sz[1] =='4.1cm'? 4 :sz[1]=='5.5cm'?3:2  //(typeSelect.value === "Single") ? 4 : 2;
+            var cellHeight = sz[0]//(result === 4) ? "1.4cm" : "1.5cm";
+            var cellWidth = sz[1]//(result === 2) ? "7.0cm" : "4.1cm";
+
+            for (var i = 0; i < Object.keys(tmpobj).length; i += result) {
+             var row = document.createElement("tr");
+                row.style.height = cellHeight;
+                row.style.maxHeight = cellHeight;
+
+                for (var j = 0; j < result && i + j < dataArray.length; j++) {
+                    var item = tmpobj[dataArray[i + j]];
+                    console.log(item);
+                    var cell = document.createElement("td");
+                    cell.style.width = cellWidth;
+                    cell.style.borderRightStyle = "solid";
+                    cell.style.borderRightWidth = "0.75pt";
+                    cell.style.borderBottomStyle = "solid";
+                    cell.style.borderBottomWidth = "0.75pt";
+                    cell.style.paddingRight = "0.38pt";
+                    cell.style.paddingLeft = "0.38pt";
+                    cell.style.verticalAlign = "top";
+                    cell.style.background = 'url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAArCAYAAAAQVipNAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAANwSURBVFhH5ZhNaxNBGMf9Cv1AEkpP0qNICCLFQyk5FU+hePApoSwhhFBCkBLEQwgioUgJpRQRkSJFxINIKUUklBJCKQVDKaGEEJ9nXnZmd2Ynm7dW8fBnXnbm2d/+n5nZTe4NBgMYR31LH1Pf0ufqD2pubCApBda3QPa1kq5zyXZwLNMkQFpQ/empHm7L+nBNCoQOMQCsx5ByJxzL14QpQ5jDj0dQe7kXW9WtBpw12/Z4EwEhzMH+ESQTG5BK5LHMs1LWpYJtD15vNthc7pYR1wXksJbB/MAbZCF1vyBU1Op6uwhJKhGoUkCYniWe0jCHwlDYNmDQBaOUdQIh5aDsbbO5wXiG4qSMQ/XZwkSYvWOEwTTJGxrO6MJr6Ewx+5bDTA4kHeIwn3a/Q3LhBQMyldVKofl1KHl1ASJ3mYyrS97PAcQPOTEBAzZqX6Ba/gAXrU5sXbY7pitul9wOsScimDeHkFrwoP7qQFwLPJWh4Gmszh+91MdoJ7zbITr09upf0XpaM3kE+iyuUyB9PAaVT04liXYTSbZdUjEdDuHA/Xff2LqQu4Y55AfQhcFE/+72ARSe12Nrq7Aj5rqAcMB7H4Z2CwLh9nUCiXkl3FHBnSbmG31c6YebzMn+oEcx7ECt5gXCrOOEYCArkHo6DrRhA4pW+tEwIAzaPDlHIA8nSCCZMlxDOoAvkTIfKNqR8DXlUFTKCOgnAam1o4CkQxoQa4sSVfZ0IBcYl3JoLKCwQyEwVClXYwdicp4ORinRxlNbh6G46WRxmkCmutc3cHXZtWr1cVnEQ+EmWXqQg/PTS5yH8VhcJxCtIfUkHMiSMiH2rvPbVA8J560+KeGbn2Ll4SnCnJ60pTN8zO+JgcTN/LZFcrwAojhLizn4ddwyx07TIbu0cTjvGQItLXrQtMOQZgfkv59wPEsLlpmVIpxhbB7DqjGA2LgRgJg4kAKJnD87IFOx5twmEGnovNtKWWz9Rw6NqX8OiIMooKhP2KkpAmjo99DMNGrK7grId4hg1C/Tvyhl3CW2qJlDd7Ko6Wdxnv9zQWCJHOxUD+8yZfyLkYAIbG2lAtedbnDs9DVsUfOUZZYr0L26CY6bjdwOJTFNmeUt6HVxzWD/mO+nUeRyKMvSRL8IjDGzUxRQG9bSZQ5zO85IWYBICMEU6p892GDuD4uVuCEKIb5tAAAAAElFTkSuQmCC\')'
+                    cell.style.backgroundRepeat= 'no-repeat';
+                    cell.style.backgroundSize= '38px';
+                    cell.style.backgroundPosition= 'center';
+                    cell.style.backdropFilter= 'opacity(0.5)';
+
+                    var paragraph1 = document.createElement("p");
+                    paragraph1.style.marginTop = "0pt";
+                    paragraph1.style.marginBottom = "0pt";
+                    paragraph1.style.textAlign = "center";
+                    paragraph1.style.fontSize = "8pt";
+                    paragraph1.innerHTML = `<span style="height:0pt; text-align:left; display:block; position:absolute; z-index:-4;"></span><strong><u><span style="font-family:Cambria; color:#ffffff; background-color:#000000;">${
+                        item[0]['Stone Id']} </span></u></strong><strong><u><span style="font-family:Cambria;">&nbsp;</span></u></strong><u><span style="font-family:Cambria;">${item[0]['Shape']}&nbsp;</span></u><strong><u><span style="font-family:Cambria; color:#ffffff; background-color:#000000;"> ${item[1]['Stone Id']}</span></u></strong>`;
+
+                    var paragraph2 = document.createElement("p");
+                    paragraph2.style.marginTop = "0pt";
+                    paragraph2.style.marginBottom = "0pt";
+                    paragraph2.style.textAlign = "center";
+                    paragraph2.style.fontSize = "8pt";
+                    paragraph2.innerHTML = `<strong><span style="font-family:Cambria;">${item[0]['Carats']}</span></strong><span style="font-family:Cambria;">&nbsp;(cts)&nbsp;</span><strong><span style="font-family:Cambria;">(${item[0]['Color']}/${item[0]['Clarity']}) ${item[1]['Carats']}</span></strong><span style="font-family:Cambria;">&nbsp;(cts)</span>`;
+
+                    var paragraph3 = document.createElement("p");
+                    paragraph3.style.marginTop = "0pt";
+                    paragraph3.style.marginBottom = "0pt";
+                    paragraph3.style.textAlign = "center";
+                    paragraph3.style.fontSize = "8pt";
+                    paragraph3.innerHTML = `<span style="font-family:Cambria;">${item[0]['Cut']} ${item[0]['Polish']} ${item[0]['Symm']}</span>`;
+
+                    var paragraph4 = document.createElement("p");
+                    paragraph4.style.marginTop = "0pt";
+                    paragraph4.style.marginBottom = "0pt";
+                    paragraph4.style.textAlign = "center";
+                    paragraph4.style.fontSize = "8pt";
+                    paragraph4.innerHTML = `<strong><span style="font-family:Cambria;">${item[0]['Report No']}&nbsp;${item[0]['Lab']}&nbsp;${item[1]['Report No']}</span></strong>`;
+
+
+                    cell.appendChild(paragraph1);
+                    cell.appendChild(paragraph2);
+                    cell.appendChild(paragraph3);
+                    cell.appendChild(paragraph4);
+                    row.appendChild(cell);
+                }
+
+                table.appendChild(row);
+            }
+
+            return table;
+        }
+            function createTableFromArray(dataArray) {
+            var table = document.createElement("table");
+            table.setAttribute("cellspacing", "0");
+            table.setAttribute("cellpadding", "0");
+            table.style.border = "0.75pt solid #000000";
+            table.style.borderCollapse = "collapse";
+            table.style.margin= 'auto';
+
+            // var result = (typeSelect.value === "Single") ? 4 : 2;
+            // var cellHeight = (result === 4) ? "1.4cm" : "1.5cm";
+            // var cellWidth = (result === 2) ? "7.0cm" : "4.1cm";
+            let sz =$('#sizeSelect').val().split('*')
+            var result = sz[1] =='4.1cm'? 4 :sz[1]=='5.5cm'?3:2  //(typeSelect.value === "Single") ? 4 : 2;
+            var cellHeight = sz[0]//(result === 4) ? "1.4cm" : "1.5cm";
+            var cellWidth = sz[1]//(result === 2) ? "7.0cm" : "4.1cm";
+
+            for (var i = 0; i < dataArray.length; i += result) {
+             var row = document.createElement("tr");
+                row.style.height = cellHeight;
+                row.style.maxHeight = cellHeight;
+
+                for (var j = 0; j < result && i + j < dataArray.length; j++) {
+                    var item = dataArray[i + j];
+                    var cell = document.createElement("td");
+                    cell.style.width = cellWidth;
+                    cell.style.borderRightStyle = "solid";
+                    cell.style.borderRightWidth = "0.75pt";
+                    cell.style.borderBottomStyle = "solid";
+                    cell.style.borderBottomWidth = "0.75pt";
+                    cell.style.paddingRight = "0.3cm";
+                    cell.style.paddingLeft = "0.3cm";
+                    cell.style.verticalAlign = "top";
+
+                    var paragraph1 = document.createElement("p");
+                    paragraph1.style.marginTop = "0pt";
+                    paragraph1.style.marginBottom = "0pt";
+                    paragraph1.style.textAlign = sz[1] == '7.0cm'?'center':"right";
+                    paragraph1.style.lineHeight = "115%";
+                    paragraph1.style.fontSize = "8pt";
+                    paragraph1.innerHTML = `
+                <img src="${imgLogo}" width="34" height="39" alt="" style="float: left;margin-top: 0.2cm;">
+                <u><span style="font-family:Cambria; color:#ffffff; background-color:#000000;">${item['Sr No']}</span></u>
+                <u><span style="font-family:Cambria;">&nbsp;</span></u>
+                <strong><u><span style="font-family:Cambria;">${item['Stone Id']}</span></u></strong>
+                <u><span style="font-family:Cambria;">&nbsp;${item['Shape']}</span></u>`;
+
+                    var paragraph2 = document.createElement("p");
+                    paragraph2.style.marginTop = "0pt";
+                    paragraph2.style.marginBottom = "0pt";
+                    paragraph2.style.textAlign = sz[1] == '7.0cm'?'center':"right";
+                    paragraph2.style.lineHeight = "115%";
+                    paragraph2.style.fontSize = "8pt";
+                    paragraph2.innerHTML = `
+                
+                <span style="font-family:Cambria;"><b>${Number(item['Carats'] || 0).toFixed(2)}</b> (cts)&nbsp;</span>
+                <strong><span style="font-family:Cambria;">(${item['Color']}/${item['Clarity']})</span></strong>`;
+
+                    var paragraph3 = document.createElement("p");
+                    paragraph3.style.marginTop = "0pt";
+                    paragraph3.style.marginBottom = "0pt";
+                    paragraph3.style.textAlign = sz[1] == '7.0cm'?'center':"right";
+                    paragraph3.style.lineHeight = "115%";
+                    paragraph3.style.fontSize = "8pt";
+                    paragraph3.innerHTML = `
+                <span style="font-family:Cambria;">&nbsp;</span>
+                <span style="font-family:Cambria;">${item['Cut']} ${item['Polish']} ${item['Symm']}&nbsp;</span>
+                ${item['Ratio'] ? `<strong><span style="font-family:Cambria;">(</span></strong>
+                <span style="font-family:Cambria;">L/W&nbsp;</span>
+                <strong><span style="font-family:Cambria;">:${item['Ratio']})</span></strong>` : ''}`;
+
+                    var paragraph4 = document.createElement("p");
+                    paragraph4.style.marginTop = "0pt";
+                    paragraph4.style.marginBottom = "0pt";
+                    paragraph4.style.textAlign = sz[1] == '7.0cm'?'center':"right";
+                    paragraph4.style.lineHeight = "115%";
+                    paragraph4.style.fontSize = "8pt";
+                    paragraph4.innerHTML = `<span style="font-family:Cambria;">${item['Lab']}&nbsp;</span><strong><span style="font-family:Cambria;">${item['Report No']}</span></strong><span style="font-family:Cambria;">&nbsp;</span>`;
+
+                    cell.appendChild(paragraph1);
+                    cell.appendChild(paragraph2);
+                    cell.appendChild(paragraph3);
+                    cell.appendChild(paragraph4);
+                    row.appendChild(cell);
+                }
+
+                table.appendChild(row);
+            }
+
+            return table;
+        }
+        
+        $('#typeForm').submit(e=>{
+            e.preventDefault();
+            submitForm(e)
+        })
+        function submitForm(e) {
+
+            var file = document.getElementById('myFile').files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (event) {
+                var data = event.target.result;
+                var workbook = XLSX.read(data, { type: 'binary' });
+                var sheet_name_list = workbook.SheetNames;
+                var json_data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+            PDFHT = $('#typeSelect').val() == 'Jodi'? createTableFromArrayJodi(json_data) : createTableFromArray(json_data)
+            // return
+                document.body.innerHTML = PDFHT.outerHTML
+                window.print()
+
+
+            };
+
+            reader.onerror = function (event) {
+                console.error("File could not be read! Code " + event.target.error.code);
+            };
+
+            reader.readAsBinaryString(file);
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+</body>
+</html>
+
