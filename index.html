@@ -77,8 +77,8 @@
 
 <body style="margin: 60px;">
     <div class="" style="text-align: end;">
-        <a href="/EX_SINGLE.xlsx" class="btn" target="_blank" rel="noopener noreferrer">Download Demo Single File</a>
-        <a href="/EX_JODI.xlsx" class="btn" target="_blank" rel="noopener noreferrer">Download Demo Jodi File</a>
+        <a href="/demo/EX_SINGLE.xlsx" class="btn" target="_blank" rel="noopener noreferrer">Download Demo Single File</a>
+        <a href="/demo/EX_JODI.xlsx" class="btn" target="_blank" rel="noopener noreferrer">Download Demo Jodi File</a>
     </div>
     <div class="container" >
         <img style="display: block;margin: 0 auto;" id="logoimg" src="" alt="" srcset="">
@@ -193,7 +193,9 @@
                     paragraph3.style.marginBottom = "0pt";
                     paragraph3.style.textAlign = "center";
                     paragraph3.style.fontSize = "8pt";
-                    paragraph3.innerHTML = `<span style="font-family:Cambria;">${item[0]['Cut']} ${item[0]['Polish']} ${item[0]['Symm']}</span>`;
+                    paragraph3.innerHTML = `<span style="font-family:Cambria;">${item[0]['Ratio'] ? `<strong><span style="font-family:Cambria;">(</span></strong>
+                <span style="font-family:Cambria;">L/W&nbsp;</span>
+                <strong><span style="font-family:Cambria;">:${item[0]['Ratio']})</span></strong>` : ''} ${item[0]['Cut']} ${item[0]['Polish']} ${item[0]['Symm']}</span>`;
 
                     var paragraph4 = document.createElement("p");
                     paragraph4.style.marginTop = "0pt";
