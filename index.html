@@ -178,6 +178,7 @@
                     paragraph1.style.marginBottom = "0pt";
                     paragraph1.style.textAlign = "center";
                     paragraph1.style.fontSize = "8pt";
+                    paragraph1.style.whiteSpace='nowrap';
                     paragraph1.innerHTML = `<span style="height:0pt; text-align:left; display:block; position:absolute; z-index:-4;"></span><strong><u><span style="font-family:Cambria; color:#ffffff; background-color:#000000;">${
                         item[0]['Stone Id']} </span></u></strong><strong><u><span style="font-family:Cambria;">&nbsp;</span></u></strong><u><span style="font-family:Cambria;">${item[0]['Shape']}&nbsp;</span></u><strong><u><span style="font-family:Cambria; color:#ffffff; background-color:#000000;"> ${item[1]['Stone Id']}</span></u></strong>`;
 
@@ -186,6 +187,7 @@
                     paragraph2.style.marginBottom = "0pt";
                     paragraph2.style.textAlign = "center";
                     paragraph2.style.fontSize = "8pt";
+                    paragraph2.style.whiteSpace='nowrap';
                     paragraph2.innerHTML = `<strong><span style="font-family:Cambria;">${item[0]['Carats']}</span></strong><span style="font-family:Cambria;">&nbsp;(cts)&nbsp;</span><strong><span style="font-family:Cambria;">(${item[0]['Color']}/${item[0]['Clarity']}) ${item[1]['Carats']}</span></strong><span style="font-family:Cambria;">&nbsp;(cts)</span>`;
 
                     var paragraph3 = document.createElement("p");
@@ -256,6 +258,7 @@
                     paragraph1.style.textAlign = sz[1] == '7.0cm'?'center':"right";
                     paragraph1.style.lineHeight = "115%";
                     paragraph1.style.fontSize = "8pt";
+                    paragraph1.style.whiteSpace='nowrap';
                     paragraph1.innerHTML = `
                 <img src="${imgLogo}" width="34" height="39" alt="" style="float: left;margin-top: 0.2cm;">
                 <u><span style="font-family:Cambria; color:#ffffff; background-color:#000000;">${item['Sr No']}</span></u>
@@ -268,6 +271,7 @@
                     paragraph2.style.marginBottom = "0pt";
                     paragraph2.style.textAlign = sz[1] == '7.0cm'?'center':"right";
                     paragraph2.style.lineHeight = "115%";
+                    paragraph2.style.whiteSpace='nowrap';
                     paragraph2.style.fontSize = "8pt";
                     paragraph2.innerHTML = `
                 
