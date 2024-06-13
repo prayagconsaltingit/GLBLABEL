@@ -193,9 +193,9 @@
                     paragraph3.style.marginBottom = "0pt";
                     paragraph3.style.textAlign = "center";
                     paragraph3.style.fontSize = "8pt";
-                    paragraph3.innerHTML = `<span style="font-family:Cambria;">${item[0]['Ratio'] ? `<strong><span style="font-family:Cambria;">(</span></strong>
+                    paragraph3.innerHTML = `<span style="font-family:Cambria;">${item[0]['Cut']} ${item[0]['Polish']} ${item[0]['Symm']} ${item[0]['Ratio'] ? `<strong><span style="font-family:Cambria;">(</span></strong>
                 <span style="font-family:Cambria;">L/W&nbsp;</span>
-                <strong><span style="font-family:Cambria;">:${item[0]['Ratio']})</span></strong>` : ''} ${item[0]['Cut']} ${item[0]['Polish']} ${item[0]['Symm']}</span>`;
+                <strong><span style="font-family:Cambria;">:${item[0]['Ratio']})</span></strong>` : ''}</span>`;
 
                     var paragraph4 = document.createElement("p");
                     paragraph4.style.marginTop = "0pt";
@@ -282,10 +282,10 @@
                     paragraph3.style.fontSize = "8pt";
                     paragraph3.innerHTML = `
                 <span style="font-family:Cambria;">&nbsp;</span>
-                <span style="font-family:Cambria;">${item['Cut']} ${item['Polish']} ${item['Symm']}&nbsp;</span>
+                <span style="font-family:Cambria;"></span>
                 ${item['Ratio'] ? `<strong><span style="font-family:Cambria;">(</span></strong>
                 <span style="font-family:Cambria;">L/W&nbsp;</span>
-                <strong><span style="font-family:Cambria;">:${item['Ratio']})</span></strong>` : ''}`;
+                <strong><span style="font-family:Cambria;">:${item['Ratio']})</span></strong>` : ''} ${item['Cut']} ${item['Polish']} ${item['Symm']}`;
 
                     var paragraph4 = document.createElement("p");
                     paragraph4.style.marginTop = "0pt";
