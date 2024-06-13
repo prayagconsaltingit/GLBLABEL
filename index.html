@@ -179,8 +179,8 @@
                     paragraph1.style.textAlign = "center";
                     paragraph1.style.fontSize = "8pt";
                     paragraph1.style.whiteSpace='nowrap';
-                    paragraph1.innerHTML = `<span style="height:0pt; text-align:left; display:block; position:absolute; z-index:-4;"></span><strong><u><span style="font-family:Cambria; color:#ffffff; background-color:#000000;">${
-                        item[0]['Stone Id']} </span></u></strong><strong><u><span style="font-family:Cambria;">&nbsp;</span></u></strong><u><span style="font-family:Cambria;">${item[0]['Shape']}&nbsp;</span></u><strong><u><span style="font-family:Cambria; color:#ffffff; background-color:#000000;"> ${item[1]['Stone Id']}</span></u></strong>`;
+                    paragraph1.innerHTML = `<span style="height:0pt; text-align:left; display:block; position:absolute; z-index:-4;"></span><strong> <u><span style="font-family:Cambria; color:#ffffff; background-color:#000000;">${item[0]['Sr No']}</span></u> ${
+                        item[0]['Stone Id']}</strong><strong><u><span style="font-family:Cambria;">&nbsp;</span></u></strong><u><span style="font-family:Cambria;">${item[0]['Shape']}&nbsp;</span></u><strong><u><span style="font-family:Cambria; color:#ffffff; background-color:#000000;">${item[1]['Sr No']}</span></u> &nbsp;${item[1]['Stone Id']}</strong>`;
 
                     var paragraph2 = document.createElement("p");
                     paragraph2.style.marginTop = "0pt";
@@ -287,9 +287,9 @@
                     paragraph3.innerHTML = `
                 <span style="font-family:Cambria;">&nbsp;</span>
                 <span style="font-family:Cambria;"></span>
-                ${item['Ratio'] ? `<strong><span style="font-family:Cambria;">(</span></strong>
+                 ${item['Cut']} ${item['Polish']} ${item['Symm']} ${item['Ratio'] ? `<strong><span style="font-family:Cambria;">(</span></strong>
                 <span style="font-family:Cambria;">L/W&nbsp;</span>
-                <strong><span style="font-family:Cambria;">:${item['Ratio']})</span></strong>` : ''} ${item['Cut']} ${item['Polish']} ${item['Symm']}`;
+                <strong><span style="font-family:Cambria;">:${item['Ratio']})</span></strong>` : ''}` ;
 
                     var paragraph4 = document.createElement("p");
                     paragraph4.style.marginTop = "0pt";
@@ -345,4 +345,3 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
 </body>
 </html>
-
